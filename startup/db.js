@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 module.exports = function(){
-	mongoose.connect('mongodb://localhost/fast')
+	mongoose.connect('mongodb://general:Iloveangoapp2019@ds155644.mlab.com:55644/heroku_qkvk099r/fast')
 	.then(() => console.log('Connected to MongoDB...'))
 }
 
