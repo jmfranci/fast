@@ -19,14 +19,9 @@ router.get('/:id', async (req,res) => {
 	res.send (doc);
 });
 
-router.get('/search/all/:key', async (req,res) => {
+router.get('/search/:key', async (req,res) => {
 	const docs = await Doc.find({ "name": { "$regex": req.params.key, "$options": "i" } });
-	res.status(200).send(docs);
-});
-
-router.get('/search/names/:key', async (req,res) => {
-	const docs = await Doc.find({ "name": { "$regex": req.params.key, "$options": "i" } });
-	res.status(200).send(_.pick(req.body, ['name']));
+	res.status(200).send(JSON.stringify({ docs: docs}));
 });
 
 router.post('/', async (req, res) => {
