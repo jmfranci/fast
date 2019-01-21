@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const express = require('express');
 const router = express.Router();
 const {Doc, validateDoc} = require('../models/doc');
+const _ = require('lodash');
 
 router.get('/', async (req,res) => {
 	const docs = await Doc.find().sort('name');
@@ -18,9 +19,14 @@ router.get('/:id', async (req,res) => {
 	res.send (doc);
 });
 
-router.get('/search/:key', async (req,res) => {
+router.get('/search/all/:key', async (req,res) => {
 	const docs = await Doc.find({ "name": { "$regex": req.params.key, "$options": "i" } });
 	res.status(200).send(docs);
+});
+
+router.get('/search/names/:key', async (req,res) => {
+	const docs = await Doc.find({ "name": { "$regex": req.params.key, "$options": "i" } });
+	res.status(200).send(_.pick(req.body, ['name']));
 });
 
 router.post('/', async (req, res) => {
